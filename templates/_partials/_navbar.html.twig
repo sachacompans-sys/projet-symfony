@@ -1,0 +1,76 @@
+<nav class="sticky top-0 z-50 bg-gray-900/95 backdrop-blur-md border-b border-gray-800 shadow-lg">
+    <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+
+        {# Logo #}
+        <a href="{{ path('app_home') }}" class="flex items-center gap-3 group">
+            <span class="flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-br from-red-600 to-red-700 shadow-md shadow-red-600/20 border border-red-500/30 transition group-hover:scale-105 group-hover:rotate-3">
+                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z"/>
+                </svg>
+            </span>
+            <span class="text-xl font-extrabold tracking-tight text-white">
+                Cine<span class="text-red-500">Tech</span>
+            </span>
+        </a>
+
+        {# Liens desktop #}
+        {% set route = app.request.attributes.get('_route') %}
+        <ul class="hidden md:flex items-center gap-8">
+            <li>
+                <a
+                    href="{{ path('app_home') }}"
+                    class="relative py-1 text-sm font-semibold transition
+                          {{ route == 'app_home' ? 'text-white' : 'text-gray-400 hover:text-white' }}"
+                >
+                    Home
+                    {% if route == 'app_home' %}
+                        <span class="absolute -bottom-1 left-0 w-full h-0.5 bg-red-500 rounded-full shadow-[0_0_8px_rgba(239,68,68,0.8)]"></span>
+                    {% endif %}
+                </a>
+            </li>
+            <li>
+                <a
+                    href="{{ path('app_game_index') }}"
+                    class="relative py-1 text-sm font-semibold transition
+                          {{ route starts with 'app_game' ? 'text-white' : 'text-gray-400 hover:text-white' }}"
+                >
+                    Catalogue
+                    {% if route starts with 'app_game' %}
+                        <span class="absolute -bottom-1 left-0 w-full h-0.5 bg-red-500 rounded-full shadow-[0_0_8px_rgba(239,68,68,0.8)]"></span>
+                    {% endif %}
+                </a>
+            </li>
+        </ul>
+
+        {# Bouton menu mobile #}
+        <button id="menu-btn" class="md:hidden p-2 rounded-lg text-gray-300 hover:text-white hover:bg-gray-800 transition" aria-label="Menu">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+        </button>
+    </div>
+
+    {# Menu mobile #}
+    <div id="mobile-menu" class="hidden md:hidden bg-gray-900 border-t border-gray-800 px-6 py-4 space-y-2">
+        <a
+            href="{{ path('app_home') }}"
+            class="block px-3 py-2 rounded-lg text-sm font-semibold transition
+                  {{ route == 'app_home' ? 'bg-red-500/15 text-red-300 border border-red-500/30' : 'text-gray-400 hover:text-white hover:bg-gray-800' }}"
+        >
+            Home
+        </a>
+        <a
+            href="{{ path('app_game_index') }}"
+            class="block px-3 py-2 rounded-lg text-sm font-semibold transition
+                  {{ route starts with 'app_game' ? 'bg-red-500/15 text-red-300 border border-red-500/30' : 'text-gray-400 hover:text-white hover:bg-gray-800' }}"
+        >
+            Catalogue
+        </a>
+    </div>
+</nav>
+
+<script>
+    document.getElementById("menu-btn").addEventListener("click", () => {
+        document.getElementById("mobile-menu").classList.toggle("hidden");
+    });
+</script>
