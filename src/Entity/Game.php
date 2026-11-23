@@ -23,11 +23,15 @@ class Game
     #[ORM\Column]
     private ?int $annee = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $genre = null;
-
     #[ORM\Column]
     private ?float $rating = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $slug = null;
+
+    #[ORM\ManyToOne(inversedBy: 'games')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Category $Category = null;
 
     public function getId(): ?int
     {
@@ -77,18 +81,6 @@ class Game
         return $this;
     }
 
-    public function getGenre(): ?string
-    {
-        return $this->genre;
-    }
-
-    public function setGenre(string $genre): static
-    {
-        $this->genre = $genre;
-
-        return $this;
-    }
-
     public function getRating(): ?float
     {
         return $this->rating;
@@ -97,6 +89,30 @@ class Game
     public function setRating(float $rating): static
     {
         $this->rating = $rating;
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): static
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->Category;
+    }
+
+    public function setCategory(?Category $Category): static
+    {
+        $this->Category = $Category;
 
         return $this;
     }

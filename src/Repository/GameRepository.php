@@ -6,15 +6,23 @@ use App\Entity\Game;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
-/**
- * @extends ServiceEntityRepository<Game>
- */
 class GameRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Game::class);
     }
+
+    public function findAllWithCategory(): array
+    {
+        return $this->createQueryBuilder('g')
+            ->innerJoin('g.Category', 'c')
+            ->addSelect('c')
+            ->orderBy('g.id', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+}
 
 //    /**
 //     * @return Game[] Returns an array of Game objects
@@ -40,4 +48,3 @@ class GameRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
-}
