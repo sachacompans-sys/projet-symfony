@@ -16,6 +16,9 @@
 
             {# Navigation desktop #}
             {% set route = app.request.attributes.get('_route') %}
+            {% set is_rapport = app.request.pathinfo == '/legacy/rapport' %}
+            {% set is_catalogue = route starts with 'app_game' and route != 'app_game_new' and not is_rapport %}
+
             <div class="hidden lg:flex items-center gap-6">
                 <ul class="flex items-center gap-6">
                     <li>
@@ -29,7 +32,7 @@
                     <li>
                         <a
                             href="{{ path('app_game_index') }}"
-                            class="py-2 text-sm font-medium border-b-2 transition {{ route starts with 'app_game' and route != 'app_game_new' ? 'text-white border-red-500' : 'text-gray-400 border-transparent hover:text-white' }}"
+                            class="py-2 text-sm font-medium border-b-2 transition {{ is_catalogue ? 'text-white border-red-500' : 'text-gray-400 border-transparent hover:text-white' }}"
                         >
                             Catalogue
                         </a>
@@ -45,7 +48,7 @@
                     <li>
                         <a
                             href="/legacy/rapport"
-                            class="py-2 text-sm font-medium border-b-2 transition {{ app.request.pathinfo == '/legacy/rapport' ? 'text-white border-red-500' : 'text-gray-400 border-transparent hover:text-white' }}"
+                            class="py-2 text-sm font-medium border-b-2 transition {{ is_rapport ? 'text-white border-red-500' : 'text-gray-400 border-transparent hover:text-white' }}"
                         >
                             Rapport
                         </a>
@@ -109,7 +112,7 @@
         </a>
         <a
             href="{{ path('app_game_index') }}"
-            class="block px-3 py-2 rounded-lg text-sm font-medium {{ route starts with 'app_game' and route != 'app_game_new' ? 'bg-gray-800 text-white' : 'text-gray-400 hover:text-white hover:bg-gray-800' }}"
+            class="block px-3 py-2 rounded-lg text-sm font-medium {{ is_catalogue ? 'bg-gray-800 text-white' : 'text-gray-400 hover:text-white hover:bg-gray-800' }}"
         >
             Catalogue
         </a>
@@ -121,7 +124,7 @@
         </a>
         <a
             href="/legacy/rapport"
-            class="block px-3 py-2 rounded-lg text-sm font-medium {{ app.request.pathinfo == '/legacy/rapport' ? 'bg-gray-800 text-white' : 'text-gray-400 hover:text-white hover:bg-gray-800' }}"
+            class="block px-3 py-2 rounded-lg text-sm font-medium {{ is_rapport ? 'bg-gray-800 text-white' : 'text-gray-400 hover:text-white hover:bg-gray-800' }}"
         >
             Rapport
         </a>
