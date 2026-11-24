@@ -1,11 +1,27 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Category{% endblock %}
+{% block title %}Nouvelle catégorie — CineTech{% endblock %}
 
 {% block body %}
-    <h1>Create new Category</h1>
+    <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
 
-    {{ include('category/_form.html.twig') }}
+        <a
+            href="{{ path('app_category_index') }}"
+            class="inline-flex items-center gap-2 text-sm font-medium text-gray-400 hover:text-white transition"
+        >
+            ← Retour aux catégories
+        </a>
 
-    <a href="{{ path('app_category_index') }}">back to list</a>
+        <div class="mt-6 bg-gray-900 border border-gray-800 rounded-xl p-6 sm:p-8">
+            <div class="pb-6 mb-6 border-b border-gray-800">
+                <h1 class="text-2xl font-bold text-white">Créer une catégorie</h1>
+                <p class="mt-1 text-sm text-gray-400">
+                    Ajoutez un nouveau genre pour classer les titres du catalogue.
+                </p>
+            </div>
+
+            {{ include('category/_form.html.twig', {'button_label': 'Créer la catégorie'}) }}
+        </div>
+
+    </div>
 {% endblock %}
