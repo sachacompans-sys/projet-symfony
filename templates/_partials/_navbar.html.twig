@@ -32,12 +32,20 @@
                 <a
                     href="{{ path('app_game_index') }}"
                     class="relative py-1 text-sm font-semibold transition
-                          {{ route starts with 'app_game' ? 'text-white' : 'text-gray-400 hover:text-white' }}"
+                          {{ route starts with 'app_game' and route != 'app_game_new' ? 'text-white' : 'text-gray-400 hover:text-white' }}"
                 >
                     Catalogue
-                    {% if route starts with 'app_game' %}
+                    {% if route starts with 'app_game' and route != 'app_game_new' %}
                         <span class="absolute -bottom-1 left-0 w-full h-0.5 bg-red-500 rounded-full shadow-[0_0_8px_rgba(239,68,68,0.8)]"></span>
                     {% endif %}
+                </a>
+            </li>
+            <li>
+                <a
+                    href="{{ path('app_game_new') }}"
+                    class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white bg-red-600 rounded-lg shadow-lg shadow-red-600/20 transition hover:bg-red-500 hover:-translate-y-0.5 active:translate-y-0"
+                >
+                    + Ajouter un jeu
                 </a>
             </li>
         </ul>
@@ -62,15 +70,21 @@
         <a
             href="{{ path('app_game_index') }}"
             class="block px-3 py-2 rounded-lg text-sm font-semibold transition
-                  {{ route starts with 'app_game' ? 'bg-red-500/15 text-red-300 border border-red-500/30' : 'text-gray-400 hover:text-white hover:bg-gray-800' }}"
+                  {{ route starts with 'app_game' and route != 'app_game_new' ? 'bg-red-500/15 text-red-300 border border-red-500/30' : 'text-gray-400 hover:text-white hover:bg-gray-800' }}"
         >
             Catalogue
+        </a>
+        <a
+            href="{{ path('app_game_new') }}"
+            class="block px-3 py-2 rounded-lg text-sm font-semibold text-center text-white bg-red-600 shadow-lg shadow-red-600/20 transition hover:bg-red-500"
+        >
+            + Ajouter un jeu
         </a>
     </div>
 </nav>
 
 <script>
-    document.getElementById("menu-btn").addEventListener("click", () => {
+    document.getElementById("menu-btn")?.addEventListener("click", () => {
         document.getElementById("mobile-menu").classList.toggle("hidden");
     });
 </script>

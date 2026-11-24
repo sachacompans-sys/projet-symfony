@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un jeu - CineTech{% endblock %}
+
+{% block body %}
+    {% set inputClass = 'w-full px-4 py-2.5 text-sm text-white bg-gray-800/90 border border-white/10 rounded-xl placeholder-gray-500 transition focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/20' %}
+    {% set labelClass = 'block mb-2 text-xs font-semibold uppercase tracking-wider text-gray-400' %}
+    {% set errorClass = 'mt-1.5 text-xs font-medium text-red-400 [&>ul]:space-y-1' %}
+
+    <div class="max-w-2xl mx-auto px-6 py-10">
+        <a
+            href="{{ path('app_game_index') }}"
+            class="inline-flex items-center gap-2 mb-6 text-sm font-medium text-gray-600 transition hover:text-gray-900"
+        >
+            ← Retour au catalogue
+        </a>
+
+        <div class="overflow-hidden rounded-2xl border border-gray-800 bg-gray-900 shadow-xl">
+            <div class="h-24 bg-gradient-to-br from-red-600/50 via-red-900/20 to-transparent"></div>
+
+            <div class="p-8 -mt-8">
+                <div class="mb-8">
+                    <span class="px-2.5 py-1 text-xs font-semibold text-red-300 bg-red-500/20 border border-red-500/30 rounded-md">
+                        Nouveau contenu
+                    </span>
+                    <h1 class="mt-3 text-3xl font-extrabold tracking-tight text-white">
+                        Ajouter un jeu
+                    </h1>
+                </div>
+
+                {# novalidate désactive la validation HTML5 pour tester le Validator serveur #}
+                {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'space-y-5'}}) }}
+
+                    <div>
+                        {{ form_label(form.name, 'Nom du jeu', {'label_attr': {'class': labelClass}}) }}
+                        {{ form_widget(form.name, {'attr': {'class': inputClass, 'placeholder': 'Ex : The Witcher 3'}}) }}
+                        <div class="{{ errorClass }}">{{ form_errors(form.name) }}</div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                        <div>
+                            {{ form_label(form.annee, 'Année de sortie', {'label_attr': {'class': labelClass}}) }}
+                            {{ form_widget(form.annee, {'attr': {'class': inputClass, 'placeholder': '2026', 'min': 1947}}) }}
+                            <div class="{{ errorClass }}">{{ form_errors(form.annee) }}</div>
+                        </div>
+
+                        <div>
+                            {{ form_label(form.rating, 'Note (sur 5)', {'label_attr': {'class': labelClass}}) }}
+                            {{ form_widget(form.rating, {'attr': {'class': inputClass, 'placeholder': '4.5'}}) }}
+                            <div class="{{ errorClass }}">{{ form_errors(form.rating) }}</div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                        <div>
+                            {{ form_label(form.Category, 'Catégorie', {'label_attr': {'class': labelClass}}) }}
+                            {{ form_widget(form.Category, {'attr': {'class': inputClass}}) }}
+                            <div class="{{ errorClass }}">{{ form_errors(form.Category) }}</div>
+                        </div>
+
+                        <div>
+                            {{ form_label(form.slug, 'Slug (URL)', {'label_attr': {'class': labelClass}}) }}
+                            {{ form_widget(form.slug, {'attr': {'class': inputClass, 'placeholder': 'the-witcher-3'}}) }}
+                            <div class="{{ errorClass }}">{{ form_errors(form.slug) }}</div>
+                        </div>
+                    </div>
+
+                    <div>
+                        {{ form_label(form.synopsis, 'Synopsis', {'label_attr': {'class': labelClass}}) }}
+                        {{ form_widget(form.synopsis, {'attr': {'class': inputClass ~ ' min-h-[120px] resize-y', 'placeholder': 'Résumé du jeu...'}}) }}
+                        <div class="{{ errorClass }}">{{ form_errors(form.synopsis) }}</div>
+                    </div>
+
+                    <div class="pt-4 flex items-center justify-end gap-3 border-t border-white/10">
+                        <a
+                            href="{{ path('app_game_index') }}"
+                            class="px-4 py-2.5 text-sm font-semibold text-gray-300 bg-gray-800 rounded-xl border border-white/10 transition hover:bg-gray-700 hover:text-white"
+                        >
+                            Annuler
+                        </a>
+                        <button
+                            type="submit"
+                            class="px-6 py-2.5 text-sm font-semibold text-white bg-red-600 rounded-xl shadow-lg shadow-red-600/20 transition hover:bg-red-500 hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
+                        >
+                            Enregistrer le jeu
+                        </button>
+                    </div>
+
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

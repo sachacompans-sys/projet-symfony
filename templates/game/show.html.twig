@@ -57,6 +57,27 @@
                         <p class="mt-2 text-sm leading-relaxed text-gray-300">{{ game.synopsis }}</p>
                     </div>
                 {% endif %}
+                <a
+                    href="{{ path('app_game_edit', {id: game.id}) }}"
+                    class="mt-6 p-4 rounded-xl block px-3 py-2 rounded-lg text-sm font-semibold text-center text-white bg-red-600 shadow-lg shadow-red-600/20 transition hover:bg-red-500"
+                >
+                    Modifier la fiche
+                </a>    
+                <form
+                    method="post"
+                    action="{{ path('app_game_delete', {id: game.id}) }}"
+                    onsubmit="return confirm('Supprimer définitivement ce jeu ?');"
+                >
+                    <input
+                        type="hidden"
+                        name="_token"
+                        value="{{ csrf_token('delete' ~ game.id) }}"
+                    >
+                    <button type="submit" class="mt-6 p-4 rounded-xl text-sm font-semibold text-center text-white bg-red-600 shadow-lg shadow-red-600/20 transition hover:bg-red-500">
+                        Supprimer
+                    </button>
+                </form>
+         
             </div>
         </div>
     </div>

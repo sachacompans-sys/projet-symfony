@@ -62,7 +62,7 @@ class AppFixtures extends Fixture
             $game->setName($titles[$i])
                 ->setSynopsis($faker->paragraphs(2, true))
                 ->setAnnee($faker->numberBetween(2004, 2026))
-                ->setRating($faker->randomFloat(1, 6, 10))
+                ->setRating($faker->randomFloat(1, 0, 5))
                 ->setSlug($slugger->slug($titles[$i])->lower()->toString())
                 ->setCategory($faker->randomElement($categories));
 
