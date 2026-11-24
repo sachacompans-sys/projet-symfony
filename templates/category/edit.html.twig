@@ -1,13 +1,40 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Category{% endblock %}
+{% block title %}Modifier {{ category.name }} — CineTech{% endblock %}
 
 {% block body %}
-    <h1>Edit Category</h1>
+    <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
 
-    {{ include('category/_form.html.twig', {'button_label': 'Update'}) }}
+        <a
+            href="{{ path('app_category_index') }}"
+            class="inline-flex items-center gap-2 text-sm font-medium text-gray-400 hover:text-white transition"
+        >
+            ← Retour aux catégories
+        </a>
 
-    <a href="{{ path('app_category_index') }}">back to list</a>
+        <div class="mt-6 bg-gray-900 border border-gray-800 rounded-xl p-6 sm:p-8">
+            <div class="flex items-center justify-between gap-4 pb-6 mb-6 border-b border-gray-800">
+                <div>
+                    <h1 class="text-2xl font-bold text-white">Modifier la catégorie</h1>
+                    <p class="mt-1 text-sm text-gray-400">
+                        Édition de <span class="text-white font-medium">{{ category.name }}</span>
+                    </p>
+                </div>
+                <span class="px-2.5 py-1 text-xs font-mono text-gray-400 bg-gray-800 border border-gray-700 rounded-lg">
+                    #{{ category.id }}
+                </span>
+            </div>
 
-    {{ include('category/_delete_form.html.twig') }}
+            {{ include('category/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+
+            {# Zone de suppression #}
+            <div class="mt-8 pt-6 border-t border-gray-800 flex items-center justify-between gap-4">
+                <p class="text-xs text-gray-400">
+                    Action irréversible : la catégorie sera définitivement supprimée.
+                </p>
+                {{ include('category/_delete_form.html.twig') }}
+            </div>
+        </div>
+
+    </div>
 {% endblock %}

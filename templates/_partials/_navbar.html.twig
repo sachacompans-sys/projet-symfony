@@ -1,85 +1,165 @@
-<nav class="sticky top-0 z-50 bg-gray-900/95 backdrop-blur-md border-b border-gray-800 shadow-lg">
-    <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+<nav class="sticky top-0 z-50 bg-gray-900 border-b border-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
 
-        {# Logo #}
-        <a href="{{ path('app_home') }}" class="flex items-center gap-3 group">
-            <span class="flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-br from-red-600 to-red-700 shadow-md shadow-red-600/20 border border-red-500/30 transition group-hover:scale-105 group-hover:rotate-3">
-                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z"/>
+            {# Logo #}
+            <a href="{{ path('app_home') }}" class="flex items-center gap-3 shrink-0">
+                <span class="flex items-center justify-center w-9 h-9 rounded-lg bg-red-600 text-white">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z"/>
+                    </svg>
+                </span>
+                <span class="text-xl font-bold text-white">
+                    Cine<span class="text-red-500">Tech</span>
+                </span>
+            </a>
+
+            {# Navigation desktop #}
+            {% set route = app.request.attributes.get('_route') %}
+            <div class="hidden lg:flex items-center gap-6">
+                <ul class="flex items-center gap-6">
+                    <li>
+                        <a
+                            href="{{ path('app_home') }}"
+                            class="py-2 text-sm font-medium border-b-2 transition {{ route == 'app_home' ? 'text-white border-red-500' : 'text-gray-400 border-transparent hover:text-white' }}"
+                        >
+                            Home
+                        </a>
+                    </li>
+                    <li>
+                        <a
+                            href="{{ path('app_game_index') }}"
+                            class="py-2 text-sm font-medium border-b-2 transition {{ route starts with 'app_game' and route != 'app_game_new' ? 'text-white border-red-500' : 'text-gray-400 border-transparent hover:text-white' }}"
+                        >
+                            Catalogue
+                        </a>
+                    </li>
+                    <li>
+                        <a
+                            href="{{ path('app_category_index') }}"
+                            class="py-2 text-sm font-medium border-b-2 transition {{ route starts with 'app_category' ? 'text-white border-red-500' : 'text-gray-400 border-transparent hover:text-white' }}"
+                        >
+                            Catégories
+                        </a>
+                    </li>
+                    <li>
+                        <a
+                            href="/legacy/rapport"
+                            class="py-2 text-sm font-medium border-b-2 transition {{ app.request.pathinfo == '/legacy/rapport' ? 'text-white border-red-500' : 'text-gray-400 border-transparent hover:text-white' }}"
+                        >
+                            Rapport
+                        </a>
+                    </li>
+                    <li>
+                        <a
+                            href="{{ path('app_game_new') }}"
+                            class="px-3.5 py-2 text-sm font-medium text-white bg-red-600 rounded-lg hover:bg-red-700 transition"
+                        >
+                            + Ajouter un jeu
+                        </a>
+                    </li>
+                </ul>
+
+                {# Zone Authentification desktop #}
+                <div class="flex items-center gap-3 pl-6 border-l border-gray-800">
+                    {% if app.user %}
+                        <span class="inline-flex items-center gap-2 px-3 py-1.5 text-xs font-medium text-gray-300 bg-gray-800 border border-gray-700 rounded-lg">
+                            <span class="w-2 h-2 rounded-full bg-green-500"></span>
+                            {{ app.user.email }}
+                        </span>
+                        <a
+                            href="{{ path('app_logout') }}"
+                            class="px-3 py-1.5 text-sm font-medium text-gray-300 bg-gray-800 border border-gray-700 rounded-lg hover:text-white hover:border-red-500 transition"
+                        >
+                            Déconnexion
+                        </a>
+                    {% else %}
+                        <a
+                            href="{{ path('app_login') }}"
+                            class="px-3 py-1.5 text-sm font-medium text-gray-300 hover:text-white transition"
+                        >
+                            Connexion
+                        </a>
+                        <a
+                            href="{{ path('app_register') }}"
+                            class="px-3.5 py-2 text-sm font-medium text-white bg-gray-800 border border-gray-700 rounded-lg hover:bg-gray-700 transition"
+                        >
+                            Inscription
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+
+            {# Bouton menu mobile #}
+            <button id="menu-btn" type="button" class="lg:hidden p-2 rounded-lg text-gray-400 hover:text-white hover:bg-gray-800" aria-label="Menu">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
                 </svg>
-            </span>
-            <span class="text-xl font-extrabold tracking-tight text-white">
-                Cine<span class="text-red-500">Tech</span>
-            </span>
-        </a>
-
-        {# Liens desktop #}
-        {% set route = app.request.attributes.get('_route') %}
-        <ul class="hidden md:flex items-center gap-8">
-            <li>
-                <a
-                    href="{{ path('app_home') }}"
-                    class="relative py-1 text-sm font-semibold transition
-                          {{ route == 'app_home' ? 'text-white' : 'text-gray-400 hover:text-white' }}"
-                >
-                    Home
-                    {% if route == 'app_home' %}
-                        <span class="absolute -bottom-1 left-0 w-full h-0.5 bg-red-500 rounded-full shadow-[0_0_8px_rgba(239,68,68,0.8)]"></span>
-                    {% endif %}
-                </a>
-            </li>
-            <li>
-                <a
-                    href="{{ path('app_game_index') }}"
-                    class="relative py-1 text-sm font-semibold transition
-                          {{ route starts with 'app_game' and route != 'app_game_new' ? 'text-white' : 'text-gray-400 hover:text-white' }}"
-                >
-                    Catalogue
-                    {% if route starts with 'app_game' and route != 'app_game_new' %}
-                        <span class="absolute -bottom-1 left-0 w-full h-0.5 bg-red-500 rounded-full shadow-[0_0_8px_rgba(239,68,68,0.8)]"></span>
-                    {% endif %}
-                </a>
-            </li>
-            <li>
-                <a
-                    href="{{ path('app_game_new') }}"
-                    class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white bg-red-600 rounded-lg shadow-lg shadow-red-600/20 transition hover:bg-red-500 hover:-translate-y-0.5 active:translate-y-0"
-                >
-                    + Ajouter un jeu
-                </a>
-            </li>
-        </ul>
-
-        {# Bouton menu mobile #}
-        <button id="menu-btn" class="md:hidden p-2 rounded-lg text-gray-300 hover:text-white hover:bg-gray-800 transition" aria-label="Menu">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
-            </svg>
-        </button>
+            </button>
+        </div>
     </div>
 
     {# Menu mobile #}
-    <div id="mobile-menu" class="hidden md:hidden bg-gray-900 border-t border-gray-800 px-6 py-4 space-y-2">
+    <div id="mobile-menu" class="hidden lg:hidden bg-gray-900 border-t border-gray-800 px-4 py-4 space-y-1">
         <a
             href="{{ path('app_home') }}"
-            class="block px-3 py-2 rounded-lg text-sm font-semibold transition
-                  {{ route == 'app_home' ? 'bg-red-500/15 text-red-300 border border-red-500/30' : 'text-gray-400 hover:text-white hover:bg-gray-800' }}"
+            class="block px-3 py-2 rounded-lg text-sm font-medium {{ route == 'app_home' ? 'bg-gray-800 text-white' : 'text-gray-400 hover:text-white hover:bg-gray-800' }}"
         >
             Home
         </a>
         <a
             href="{{ path('app_game_index') }}"
-            class="block px-3 py-2 rounded-lg text-sm font-semibold transition
-                  {{ route starts with 'app_game' and route != 'app_game_new' ? 'bg-red-500/15 text-red-300 border border-red-500/30' : 'text-gray-400 hover:text-white hover:bg-gray-800' }}"
+            class="block px-3 py-2 rounded-lg text-sm font-medium {{ route starts with 'app_game' and route != 'app_game_new' ? 'bg-gray-800 text-white' : 'text-gray-400 hover:text-white hover:bg-gray-800' }}"
         >
             Catalogue
         </a>
         <a
+            href="{{ path('app_category_index') }}"
+            class="block px-3 py-2 rounded-lg text-sm font-medium {{ route starts with 'app_category' ? 'bg-gray-800 text-white' : 'text-gray-400 hover:text-white hover:bg-gray-800' }}"
+        >
+            Catégories
+        </a>
+        <a
+            href="/legacy/rapport"
+            class="block px-3 py-2 rounded-lg text-sm font-medium {{ app.request.pathinfo == '/legacy/rapport' ? 'bg-gray-800 text-white' : 'text-gray-400 hover:text-white hover:bg-gray-800' }}"
+        >
+            Rapport
+        </a>
+        <a
             href="{{ path('app_game_new') }}"
-            class="block px-3 py-2 rounded-lg text-sm font-semibold text-center text-white bg-red-600 shadow-lg shadow-red-600/20 transition hover:bg-red-500"
+            class="block px-3 py-2 rounded-lg text-sm font-medium text-center text-white bg-red-600 hover:bg-red-700"
         >
             + Ajouter un jeu
         </a>
+
+        {# Zone Authentification mobile #}
+        <div class="pt-3 mt-3 border-t border-gray-800 space-y-2">
+            {% if app.user %}
+                <div class="flex items-center gap-2 px-3 py-2 text-xs font-medium text-gray-300 bg-gray-800 border border-gray-700 rounded-lg">
+                    <span class="w-2 h-2 rounded-full bg-green-500"></span>
+                    <span class="truncate">{{ app.user.email }}</span>
+                </div>
+                <a
+                    href="{{ path('app_logout') }}"
+                    class="block px-3 py-2 rounded-lg text-sm font-medium text-center text-gray-300 bg-gray-800 border border-gray-700 hover:text-white hover:border-red-500"
+                >
+                    Déconnexion
+                </a>
+            {% else %}
+                <a
+                    href="{{ path('app_login') }}"
+                    class="block px-3 py-2 rounded-lg text-sm font-medium text-center text-gray-300 bg-gray-800 border border-gray-700 hover:text-white"
+                >
+                    Connexion
+                </a>
+                <a
+                    href="{{ path('app_register') }}"
+                    class="block px-3 py-2 rounded-lg text-sm font-medium text-center text-white bg-gray-800 border border-gray-700 hover:bg-gray-700"
+                >
+                    Inscription
+                </a>
+            {% endif %}
+        </div>
     </div>
 </nav>
 

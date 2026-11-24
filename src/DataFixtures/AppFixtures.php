@@ -4,18 +4,44 @@ namespace App\DataFixtures;
 
 use App\Entity\Category;
 use App\Entity\Game;
+use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\String\Slugger\AsciiSlugger;
 
 class AppFixtures extends Fixture
 {
+    public function __construct(
+        private UserPasswordHasherInterface $hasher,
+        #[Autowire('%env(ADMIN_PASSWORD)%')]
+        private string $adminPassword,
+        #[Autowire('%env(USER_PASSWORD)%')]
+        private string $userPassword,
+    ) {}
+
+
     public function load(ObjectManager $manager): void
     {
         $faker = Factory::create('fr_FR');
         $slugger = new AsciiSlugger();
 
+        // 1. Création de l'administrateur
+        $admin = new User();
+        $admin->setEmail('admin@cinetech.fr')
+            ->setRoles(['ROLE_ADMIN']);
+        $admin->setPassword($this->hasher->hashPassword($admin, $this->adminPassword));
+        $manager->persist($admin);
+
+        $user = new User();
+        $user->setEmail('user@cinetech.fr')
+            ->setRoles(['ROLE_USER']);
+        $user->setPassword($this->hasher->hashPassword($user, $this->userPassword));
+        $manager->persist($user);
+
+        // 2. Création des catégories
         $categories = [];
         foreach (['Open World', 'RPG', 'Plateforme', 'FPS', 'Stratégie'] as $name) {
             $category = new Category();
@@ -24,6 +50,7 @@ class AppFixtures extends Fixture
             $categories[] = $category;
         }
 
+        // 3. Création des jeux
         $titles = [
             'The Witcher 3: Wild Hunt',
             'Elden Ring',
